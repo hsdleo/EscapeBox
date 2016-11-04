@@ -1,34 +1,45 @@
 <div class = "list">
 	<div class="item2" >   
 		<label>{{acionamentos[0].texto}}</label>  
-		<label>{{acionamentos[1].texto}}</label>  
-		<label>{{acionamentos[2].texto}}</label>  
-		<label>{{acionamentos[3].texto}}</label>  
+		<label>{{acionamentos[1].texto}}</label>   
 
 	</div>
 
 	<div class = "item3">
-		<button class="btn btn-md btn-default"
+		<button class="btn btn-xs btn-default"
 		ng-click="comandoPassagem(1)"
 		>Abrir</button>
-		<button class="btn btn-md btn-default"
-		ng-click="comandoGiroflex(1)" >   Ligar  </button> 
-		<button class="btn btn-md btn-default"
-		ng-click="comandoLuzCela(1)" >   Ligar  </button>  
-		<button class="btn btn-md btn-default" 
+		<button class="btn btn-xs btn-default"
+		ng-click="comandoGiroflex(0)" >   Ligar  </button> 
+	</div>
+	<div class = "item4">
+		<button class="btn btn-xs btn-default"
+		ng-click="comandoPassagem(0)"
+		>   Fechar  </button>
+		<button class="btn btn-xs btn-default"
+		ng-click="comandoGiroflex(1)" > Desligar </button> 
+
+
+<div class="item2" >   
+		<label>{{acionamentos[2].texto}}</label>
+		<label>{{acionamentos[3].texto}}</label>  
+	</div>
+
+	<div class = "item3">
+		<button class="btn btn-xs btn-default"
+		ng-click="comandoLuzCela(0)" >   Ligar  </button>  
+		<button class="btn btn-xs btn-default" 
 		ng-click="comandoSaida(1)">   Abrir  </button> 
 	</div>
 	<div class = "item4">
-		<button class="btn btn-md btn-default"
-		ng-click="comandoPassagem(0)"
-		>   Fechar  </button>
-		<button class="btn btn-md btn-default"
-		ng-click="comandoGiroflex(0)" > Desligar </button> 
-		<button class="btn btn-md btn-default"
-		ng-click="comandoLuzCela(0)" > Desligar </button>  
-		<button class="btn btn-md btn-default" 
+		<button class="btn btn-xs btn-default"
+		ng-click="comandoLuzCela(1)" > Desligar </button>  
+		<button class="btn btn-xs btn-default" 
 		ng-click="comandoSaida(0)">   Fechar  </button> 
 	</div>
+
+
+
 
 </div>
 

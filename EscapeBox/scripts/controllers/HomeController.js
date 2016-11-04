@@ -13,16 +13,37 @@
 
        function formatNumber(n) {return (n<10? '0' : '') + n;}
        client = mows.createClient('ws://192.168.0.100:9001/mqtt')
-       client && client.subscribe('t_sub');
+       client && client.subscribe('topicoArduinoPronto');
 
        client.on('message', function (topic, message) {
          console.log(message);
+
+         if(message=="1"){
+          console.log("porra");
+          $scope.aguardando = false;
+          $scope.preparar = true;
+          $scope.tocarNada();
+         }
          $scope.message = message;
        });
 
-       $scope.shuffle = function(cod) {
-        client && client.publish('t_sub', String(cod));
-      }
+       $scope.tocarNada = function(){
+      $scope.audioNada.setVolume(0.6);
+        $scope.audioNada.stop();
+       };
+      $scope.tocarAmbiente = function () {
+        $scope.audioAmbiente.setVolume(0.2);
+        $scope.audioAmbiente.play();
+      };
+      $scope.tocarDerrota = function () {
+        $scope.audioDerrota.setVolume(0.6);
+        $scope.audioDerrota.play();
+      };
+      $scope.tocarDicaCama = function () {
+        $scope.audioDicaCama.setVolume(0.25);
+        $scope.audioDicaCama.play();
+      };
+
 
       $scope.tocarSirene = function () {
         $scope.audioSirene.setVolume(0.2);
@@ -30,15 +51,16 @@
       };
       $scope.tocarObjetos = function () {
         $scope.audioObjetos.setVolume(1);
-        $scope.audioObjetos.playPause();
+        $scope.audioObjetos.play();
       };
       $scope.tocarDescarga = function () {
         $scope.audioDescarga.setVolume(0.2);
-        $scope.audioDescarga.playPause();
+        $scope.audioDescarga.play();
       };
       $scope.tocarDisjuntor = function () {
         $scope.audioDisjuntor.setVolume(0.2);
-        $scope.audioDisjuntor.playPause();
+        $scope.audioDisjuntor.play();
+        
       };
 
 
@@ -47,8 +69,8 @@
       $scope.message = 'Home Controller';
 
       $scope.imprimir = function(arg){
-        console.log("ola");
       }
+  
 
 
       var stop;
@@ -77,6 +99,7 @@
             $scope.resetTimer = function() {
               $scope.stopTimer();
               timer1 = 3600;
+
               $scope.minuto = formatNumber(Math.floor(timer1 / 60));
               $scope.segundo = formatNumber(timer1%60);
             };
@@ -89,8 +112,7 @@
            //$scope.sound = ngAudio.load("sounds/sirene.mp3"); // returns NgAudioObject
 
 
-
-           $scope.dicas = [{"id":"1","texto":"Dica do Armário"},
+           $scope.dicas = [{"id":"1","texto":"Dica para revistar a cama"},
            {"id":"2","texto":"Dica do Feijão"},
            {"id":"3","texto":"Dica do Alface"},
            {"id":"4","texto":"Dica do Renatão"},
@@ -103,20 +125,28 @@
            {"id":"3","texto":"Luz Cela"},
            {"id":"4","texto":"Porta Saída"}];
            $scope.efeitos = [{"id":"1","texto":"Descarga"},
-           {"id":"2","texto":"Disjuntor"}];
+           {"id":"2","texto":"Disjuntor"},
+           {"id":"2","texto":"Sirene"}];
 
-           $scope.funcao1 = function(dica){
-             client && client.publish('t_sub', String(dica.texto));
-             $scope.message = dica.id;
-             console.log(dica.id);
-           };
-           $scope.startJogo = function() {
+    
+           $scope.prepararJogo = function() {
+            client && client.publish('topicoPrincipal', String('01'));
+            $scope.comandoLuzCela(1);
+
+          };
+          $scope.startJogo = function() {
             $scope.startTimer();
+            $scope.tocarAmbiente();
+            $scope.comandoLuzCela(0);
+
             client && client.publish('topicoPrincipal', String('01'));
           };
 
+
           $scope.resetarJogo = function() {
             $scope.resetTimer();
+            $scope.comandoLuzCela(0);
+            $scope.audioAmbiente.stop();
             client && client.publish('topicoPrincipal', String('00'));
           };
 
@@ -124,6 +154,7 @@
             var msg = '1' + cod; 
             client && client.publish('topicoPrincipal', String(msg));
             $scope.message = cod;
+
           };
 
           $scope.comandoSaida = function(cod) {
@@ -133,13 +164,13 @@
           };
 
           $scope.comandoGiroflex= function(cod) {
-            var msg = '3' + cod;
+            var msg = '4' + cod;
             client && client.publish('topicoPrincipal', String(msg));
             $scope.message = cod;
           };
 
           $scope.comandoLuzCela = function(cod) {
-            var msg = '4' + cod;
+            var msg = '3' + cod;
             client && client.publish('topicoPrincipal', String(msg));
             $scope.message = cod;
           };

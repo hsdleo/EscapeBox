@@ -1,15 +1,20 @@
 <div class = "list">
 	<div class="item" >    
-	<button class="btn btn-md btn-default" 
+	<button class="btn btn-sm btn-default" 
 	ng-click="tocarDescarga()" >{{efeitos[0].texto}}</button>
-	<button class="btn btn-md btn-default"
+	<button class="btn btn-sm btn-default"
 	ng-click="tocarDisjuntor()" >{{efeitos[1].texto}}</button> 
+	<button class="btn btn-sm btn-default"
+	ng-click="tocarSirene()" >{{efeitos[2].texto}}</button> 
 
 	<audio media-player="audioDescarga" data-playlist="playlistDescarga">
 	<source src="/sounds/descarga.mp3" type="audio/mp3">
 	</audio>
 	<audio media-player="audioDisjuntor" data-playlist="playlistDisjuntor">
 	<source src="/sounds/disjuntor.mp3" type="audio/mp3">
+	</audio>
+	<audio media-player="audioSirene" data-playlist="playlistSirene">
+	<source src="/sounds/sirene.mp3" type="audio/mp3">
 	</audio>
 	</div>
 </div>
