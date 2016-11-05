@@ -19,16 +19,19 @@
          console.log(message);
 
          if(message=="1"){
-          console.log("porra");
           $scope.aguardando = false;
           $scope.preparar = true;
           $scope.tocarNada();
          }
+        if(message=="2"){
+
+        }
+
          $scope.message = message;
        });
 
        $scope.tocarNada = function(){
-      $scope.audioNada.setVolume(0.6);
+      $scope.audioNada.setVolume(0.1);
         $scope.audioNada.stop();
        };
       $scope.tocarAmbiente = function () {
@@ -43,6 +46,34 @@
         $scope.audioDicaCama.setVolume(0.25);
         $scope.audioDicaCama.play();
       };
+      $scope.tocarDicaDirecoes = function () {
+        $scope.audioDicaDirecoes.setVolume(0.25);
+        $scope.audioDicaDirecoes.play();
+      };
+      $scope.tocarDicaFichas = function () {
+        $scope.audioDicaFichas.setVolume(0.25);
+        $scope.audioDicaFichas.play();
+      };
+      $scope.tocarDicaAlvo = function () {
+        $scope.audioDicaAlvo.setVolume(0.25);
+        $scope.audioDicaAlvo.play();
+      };
+      $scope.tocarDicaCobertor = function () {
+        $scope.audioDicaCobertor.setVolume(0.25);
+        $scope.audioDicaCobertor.play();
+      };
+      $scope.tocarTelefone = function () {
+        $scope.audioTelefone.setVolume(0.25);
+        $scope.audioTelefone.playPause();
+      };
+      $scope.tocarArma = function () {
+        $scope.audioArma.setVolume(0.25);
+        $scope.audioArma.playPause();
+      };
+      $scope.tocarUnlock = function () {
+        $scope.audioUnlock.setVolume(0.25);
+        $scope.audioUnlock.playPause();
+      };
 
 
       $scope.tocarSirene = function () {
@@ -52,6 +83,10 @@
       $scope.tocarObjetos = function () {
         $scope.audioObjetos.setVolume(1);
         $scope.audioObjetos.play();
+      };
+      $scope.tocarGarrafas = function () {
+        $scope.audioGarrafas.setVolume(0.6);
+        $scope.audioGarrafas.play();
       };
       $scope.tocarDescarga = function () {
         $scope.audioDescarga.setVolume(0.2);
@@ -67,12 +102,9 @@
       $scope.minuto = formatNumber(Math.floor(timer1 / 60));
       $scope.segundo = formatNumber(timer1%60);
       $scope.message = 'Home Controller';
-
       $scope.imprimir = function(arg){
       }
   
-
-
       var stop;
       $scope.startTimer = function() {
               // Don't start a new fight if we are already fighting
@@ -81,10 +113,12 @@
               stop = $interval(function() {
                 if (timer1 > 0 ) {
                   timer1 = timer1- 1;
+                  if(timer1 == 60){$scope.tocarSirene();}
                   $scope.minuto = formatNumber(Math.floor(timer1 / 60));
                   $scope.segundo = formatNumber(timer1%60);
                 } else {
                   $scope.stopTimer();
+                  $scope.tocarDerrota();
                 }
               }, 1000,0);
             };
@@ -112,21 +146,32 @@
            //$scope.sound = ngAudio.load("sounds/sirene.mp3"); // returns NgAudioObject
 
 
-           $scope.dicas = [{"id":"1","texto":"Dica para revistar a cama"},
-           {"id":"2","texto":"Dica do Feijão"},
-           {"id":"3","texto":"Dica do Alface"},
-           {"id":"4","texto":"Dica do Renatão"},
-           {"id":"5","texto":"Dica do Dix"}];
-           $scope.alertas = [{"id":"1","texto":"Não é necessário subir nos móveis"},
-           {"id":"2","texto":"Não é necessário forçar nenhum objeto"}];
+           $scope.dicas = [{"id":"1","texto":"Cama (1)"},
+           {"id":"2","texto":"Cama (2)"},
+           {"id":"3","texto":"Ficha (1)"},
+           {"id":"4","texto":"Ficha (2)"},
+           {"id":"5","texto":"Alvo"},
+           {"id":"6","texto":"Cobertor"},
+           {"id":"7","texto":"Apelido"},
+           {"id":"8","texto":"Tangram"}];
 
-           $scope.acionamentos = [{"id":"1","texto":"Passagem Secreta"},
-           {"id":"2","texto":"Giroflex"},
-           {"id":"3","texto":"Luz Cela"},
-           {"id":"4","texto":"Porta Saída"}];
+
+           $scope.alertas = [{"id":"1","texto":"Não tire as GARRAFAS"},
+           {"id":"2","texto":"Não FORÇE nenhum objeto"}];
+
+           $scope.acionamentos = [{"id":"1","texto":"Abrir Passagem"},
+           {"id":"2","texto":"Fechar Passagem"},
+           {"id":"3","texto":"Desligar GiroFlex"},
+           {"id":"4","texto":"Ligar GiroFlex"},
+           {"id":"5","texto":"Desligar Luz"},
+           {"id":"6","texto":"Ligar Luz"},
+           {"id":"7","texto":"Abrir Saída"},
+           {"id":"8","texto":"Fechar Saída"}];
+
            $scope.efeitos = [{"id":"1","texto":"Descarga"},
            {"id":"2","texto":"Disjuntor"},
-           {"id":"2","texto":"Sirene"}];
+           {"id":"3","texto":"Sirene"},
+           {"id": "4","texto":"Telefone"}];
 
     
            $scope.prepararJogo = function() {
